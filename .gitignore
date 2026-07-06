@@ -1,0 +1,8 @@
+node_modules/
+dist/
+release/
+models/*.bin
+samples/sample.wav
+samples/_parts/
+native/audiocap
+.DS_Store

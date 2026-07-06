@@ -1,0 +1,29 @@
+{
+  "name": "open-granola",
+  "version": "1.0.0",
+  "description": "Free, fully-local Granola.ai alternative for macOS: whisper.cpp + ScreenCaptureKit + Ollama",
+  "main": "dist/main.js",
+  "scripts": {
+    "build:main": "esbuild src/main/main.ts src/main/preload.ts --bundle --platform=node --external:electron --outdir=dist --format=cjs",
+    "build:renderer": "esbuild src/renderer/index.tsx --bundle --outfile=dist/renderer/index.js && cp src/renderer/index.html src/renderer/styles.css dist/renderer/",
+    "build:native": "swiftc -O -swift-version 5 -o native/audiocap native/AudioCapture.swift",
+    "build": "npm run build:main && npm run build:renderer",
+    "typecheck": "tsc --noEmit",
+    "start": "npm run build && electron .",
+    "package": "npm run build && electron-packager . OpenGranola --platform=darwin --arch=arm64 --out=release --overwrite --no-asar --icon=build/icon.icns --app-bundle-id=local.opengranola --ignore \"^/(src|samples|release|build|node_modules|\\.git.*|BUILD-PROMPT.md|tsconfig.json)($|/)\" --ignore \"native/AudioCapture.swift\""
+  },
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "devDependencies": {
+    "@electron/packager": "^20.0.2",
+    "@types/node": "^26.1.0",
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "electron": "^43.0.0",
+    "esbuild": "^0.28.1",
+    "typescript": "^6.0.3",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7"
+  }
+}
